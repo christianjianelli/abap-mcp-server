@@ -8,23 +8,21 @@ This repository contains a lightweight MCP server written in Python. It exposes 
 ### ABAP Dictionary (DDIC) Management
 
 - **Domains**
-  - Read, search, create, update, delete domains
-  - Manage fixed values
+  - Read, search, create, update domains
   - Manage translations for domain fixed values
 
 - **Data Elements**
-  - Read, search, create, update, delete data elements with built-in types or domain references
+  - Read, search, create, update data elements with built-in types or domain references
   - Manage translations for data element labels
 
 - **Structures**
-  - Read, search, create, update, delete structures
+  - Read, search, create, update structures
 
 - **Tables**
-  - Read, search, create, update, delete transparent tables
-  - Manage technical settings (data class, size category)
+  - Read, search, create, update transparent tables
 
 - **Table Types**
-  - Read, search, create, update, delete table types
+  - Read, search, create, update table types
 
 - **CDS views**
   - Read, search, create, update, delete CDS views
@@ -39,6 +37,7 @@ This repository contains a lightweight MCP server written in Python. It exposes 
 - **Transport Requests**
   - Create workbench and customizing requests
   - Search and read transport request details
+  - Release transport requests
 
 ### ABAP Coding
 
