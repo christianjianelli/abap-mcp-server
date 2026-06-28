@@ -1,0 +1,17 @@
+abap-mcp-server
+=================
+
+Legend
+------
+* : fixed
+! : changed
++ : added
+- : removed
+
+
+2026-06-28
+-------------------
+
+Version 1.0.1
+
++ Missing Interface tools.
