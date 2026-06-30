@@ -9,6 +9,14 @@ Legend
 - : removed
 
 
+2026-06-30
+-------------------
+
+Version 1.0.2
+
+* SQL tools empty response bugfix
+
+
 2026-06-28
 -------------------
 
