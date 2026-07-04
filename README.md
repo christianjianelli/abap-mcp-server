@@ -50,8 +50,8 @@ This repository contains a lightweight MCP server written in Python. It exposes 
 - **ABAP Function Module**
   - Read ABAP function module source code
 
-- **ABAP Program/Include** 
-  - Read ABAP program/include source code
+- **ABAP Program and Include** 
+  - Read, search, create, update, check, activate ABAP programs and includes
 
 ## Installation
 
