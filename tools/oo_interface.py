@@ -39,12 +39,16 @@ async def read_interface(name: str) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
-            response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-        
+            response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
+       
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 
 async def search_interfaces(package: str, name: str = "", description: str = "") -> str:
@@ -62,13 +66,16 @@ async def search_interfaces(package: str, name: str = "", description: str = "")
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
+
             response = client.get(url, params={"package": package, "name": name, "description": description, "r": str(uuid.uuid4())})
 
-            return response.text
-        
         except Exception as e:
             return f"Error: {e}"
 
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def create_interface(abapInterfaceCreate: InterfaceCreate) -> str:
     """Creates a new ABAP interface.
@@ -83,13 +90,17 @@ async def create_interface(abapInterfaceCreate: InterfaceCreate) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
-            response = client.post(url, json=abapInterfaceCreate.model_dump())
 
-            return response.text
+            response = client.post(url, json=abapInterfaceCreate.model_dump())
         
         except Exception as e:
             return f"Error: {e}"
         
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
+
 async def update_interface(abapInterfaceUpdate: InterfaceUpdate) -> str:
     """Updates an existing ABAP interface.
 
@@ -103,12 +114,16 @@ async def update_interface(abapInterfaceUpdate: InterfaceUpdate) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
+
             response = client.put(url, json=abapInterfaceUpdate.model_dump())
 
-            return response.text
-        
         except Exception as e:
             return f"Error: {e}"        
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def activate_interface(name: str) -> str:
     """Activates the source code of an ABAP interface.
@@ -123,12 +138,16 @@ async def activate_interface(name: str) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
+
             response = client.get(url + "/activate", params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-        
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 
 async def check_interface_syntax(name: str) -> str:
@@ -144,12 +163,16 @@ async def check_interface_syntax(name: str) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
-            response = client.get(url + "/check", params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
+            response = client.get(url + "/check", params={"name": name, "r": str(uuid.uuid4())})
         
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

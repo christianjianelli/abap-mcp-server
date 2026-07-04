@@ -38,6 +38,9 @@ async def create_cds_view(cds: CdsCreate) -> str:
         try:
             response = client.post(url, json=cds.model_dump())
 
+            if response.is_error:
+                return f"Error: {response.status_code} - {response.reason_phrase}"
+
             return response.text
         
         except Exception as e:
@@ -59,6 +62,9 @@ async def read_cds_view(name: str) -> str:
     
             response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
+            if response.is_error:
+                return f"Error: {response.status_code} - {response.reason_phrase}"
+
             return response.text
 
         except Exception as e:
@@ -77,6 +83,9 @@ async def update_cds_view(cds: CdsUpdate) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
         try:
             response = client.put(url, json=cds.model_dump())
+
+            if response.is_error:
+                return f"Error: {response.status_code} - {response.reason_phrase}"
 
             return response.text
         
@@ -100,6 +109,9 @@ async def delete_cds_view(name: str, transport_request: str) -> str:
     
             response = client.delete(url, params={"name": name, "transport_request": transport_request, "r": str(uuid.uuid4())})
 
+            if response.is_error:
+                return f"Error: {response.status_code} - {response.reason_phrase}"
+            
             return response.text
 
         except Exception as e:

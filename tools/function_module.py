@@ -25,12 +25,16 @@ async def read_function_module(name: str) -> str:
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
 
         try:
-            response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
+            response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
         
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

@@ -42,10 +42,13 @@ async def read_table_type(name: str) -> str:
     
             response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def search_table_types(package: str, name: str = "", description: str = "") -> str:
     """Returns the technical information of a table type and its fields.
@@ -65,10 +68,13 @@ async def search_table_types(package: str, name: str = "", description: str = ""
     
             response = client.get(url, params={"name": name, "package": package, "description": description, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def create_table_type(table_type: TableTypeCreate) -> str:
 
@@ -85,11 +91,14 @@ async def create_table_type(table_type: TableTypeCreate) -> str:
         try:
     
             response = client.post(url, json=table_type.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def update_table_type(table_type: TableTypeUpdate) -> str:
     
@@ -107,11 +116,14 @@ async def update_table_type(table_type: TableTypeUpdate) -> str:
         try:
     
             response = client.put(url, json=table_type.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"    
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

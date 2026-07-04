@@ -52,10 +52,13 @@ async def read_structure(name: str) -> str:
     
             response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def search_structures(package: str, name: str = "", description: str = "") -> str:
     """Returns the technical information of a structure and its fields.
@@ -75,10 +78,13 @@ async def search_structures(package: str, name: str = "", description: str = "")
     
             response = client.get(url, params={"name": name, "package": package, "description": description, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def create_structure(structure: StructureCreate) -> str:
 
@@ -95,11 +101,14 @@ async def create_structure(structure: StructureCreate) -> str:
         try:
     
             response = client.post(url, json=structure.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def update_structure(structure: StructureUpdate) -> str:
 
@@ -119,11 +128,14 @@ async def update_structure(structure: StructureUpdate) -> str:
         try:
     
             response = client.put(url, json=structure.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"        
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

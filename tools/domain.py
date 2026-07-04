@@ -62,10 +62,13 @@ async def read_domain(name: str) -> str:
     
             response = client.get(url, params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def search_domains(package: str, name: str = "", description: str = "") -> str:
     """Search for domains within a package optionally filtered by name.
@@ -84,11 +87,14 @@ async def search_domains(package: str, name: str = "", description: str = "") ->
         try:
     
             response = client.get(url, params={"package": package, "name": name, "description": description, "r": str(uuid.uuid4())})
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def create_domain(domain: DomainCreate) -> str:
     """Creates a new ABAP domain based on the provided definition.
@@ -105,11 +111,14 @@ async def create_domain(domain: DomainCreate) -> str:
         try:
     
             response = client.post(url, json=domain.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"       
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def update_domain(domain: DomainUpdate) -> str:
     """Updates an existing ABAP domain based on the provided definition.
@@ -127,10 +136,13 @@ async def update_domain(domain: DomainUpdate) -> str:
     
             response = client.put(url, json=domain.model_dump())
 
-            return response.text
-    
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def translate_domain(domain: DomainTranslate) -> str:
     """Translates the short description and fixed value descriptions of an existing ABAP domain into another language.
@@ -147,11 +159,14 @@ async def translate_domain(domain: DomainTranslate) -> str:
         try:
     
             response = client.post(url + "/set_translation?r=" + str(uuid.uuid4()), json=domain.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def get_domain_translation(name: str, language: str) -> str:
     """Retrieves the translation of a domain's short description and fixed value descriptions into a specific language.
@@ -169,11 +184,14 @@ async def get_domain_translation(name: str, language: str) -> str:
         try:
     
             response = client.get(url + "/get_translation", params={"name": name, "language": language, "r": str(uuid.uuid4())})
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

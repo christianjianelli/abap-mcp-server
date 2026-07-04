@@ -69,10 +69,10 @@ async def read_data_element(name: str) -> str:
         except Exception as e:
             return f"Error: {e}"
 
-        if response.status_code == 200:
-            return response.text
-        else:
-            return f"Error: {response.status_code} - {response.text}"
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def search_data_elements(package: str, name: str = "", description: str = "") -> str:
     """Search for data elements within a package optionally filtered by name.
@@ -90,15 +90,15 @@ async def search_data_elements(package: str, name: str = "", description: str = 
         try:
     
             response = client.get(url, params={"package": package, "name": name, "description": description, "r": str(uuid.uuid4())})
-    
+                
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
 
-        if response.status_code == 200:
-            return response.text
-        else:
-            return f"Error: {response.status_code} - {response.text}"
-
+        return response.text
+        
 async def create_data_element(data_element: DataElementCreate) -> str:
     """Creates a new ABAP data element based on the provided information.
 
@@ -114,11 +114,14 @@ async def create_data_element(data_element: DataElementCreate) -> str:
         try:
     
             response = client.post(url, json=data_element.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"       
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+
+        return response.text
 
 async def update_data_element(data_element: DataElementUpdate) -> str:
     """Updates an existing ABAP data element based on the provided information.
@@ -135,11 +138,14 @@ async def update_data_element(data_element: DataElementUpdate) -> str:
         try:
     
             response = client.put(url, json=data_element.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+
+        return response.text
 
 async def translate_data_element(translation: DataElementTranslation) -> str:
     
@@ -157,11 +163,14 @@ async def translate_data_element(translation: DataElementTranslation) -> str:
         try:
     
             response = client.put(url + "/set_translation", json=translation.model_dump())
-
-            return response.text
         
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+
+        return response.text
 
 async def get_data_element_translation(name: str) -> str:
 
@@ -180,11 +189,13 @@ async def get_data_element_translation(name: str) -> str:
     
             response = client.get(url + "/get_translation", params={"name": name, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
 
+        return response.text
 
 def get_tools():
     return [

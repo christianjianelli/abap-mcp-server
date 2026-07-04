@@ -30,13 +30,13 @@ async def execute_sql_query(fieldlist: str, table: str, where_clause: str) -> st
     
             response = await client.get(url, params={"fieldlist": fieldlist, "table": table, "where": where_clause, "r": str(uuid.uuid4())})
 
-            if response.is_error:
-                return f"Error: {response.status_code} - {response.reason_phrase}"
-
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+
+        return response.text
         
 async def execute_sql_insert(table: str, data: Dict[str, Any]) -> str:
     """Executes a SQL INSERT statement on the SAP system and returns the result.
@@ -55,13 +55,13 @@ async def execute_sql_insert(table: str, data: Dict[str, Any]) -> str:
 
             response = await client.post(url, params={"table": table, "r": str(uuid.uuid4())}, json=data)
 
-            if response.is_error:
-                return f"Error: {response.status_code} - {response.reason_phrase}"
-            
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+            
+        return response.text
         
 async def execute_sql_update(table: str, fieldlist: str, where_clause: str) -> str:
     """Executes a SQL UPDATE statement on the SAP system and returns the result.
@@ -81,13 +81,13 @@ async def execute_sql_update(table: str, fieldlist: str, where_clause: str) -> s
 
             response = await client.put(url, params={"table": table, "fieldlist": fieldlist, "where": where_clause, "r": str(uuid.uuid4())})
     
-            if response.is_error:
-                return f"Error: {response.status_code} - {response.reason_phrase}"
-            
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def execute_sql_delete(table: str, where_clause: str) -> str:
     """Executes a SQL DELETE statement on the SAP system and returns the result.
@@ -106,13 +106,13 @@ async def execute_sql_delete(table: str, where_clause: str) -> str:
 
             response = await client.delete(url, params={"table": table, "where": where_clause, "r": str(uuid.uuid4())})
 
-            if response.is_error:
-                return f"Error: {response.status_code} - {response.reason_phrase}"
-
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+
+        return response.text
 
 def get_tools():
     return [

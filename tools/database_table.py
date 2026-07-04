@@ -74,10 +74,13 @@ async def search_database_tables(package: str, name: str = "", description: str 
     
             response = client.get(url, params={"name": name, "package": package, "description": description, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def create_database_table(table: DatabaseTableCreate) -> str:
     """Creates a database table in the SAP ABAP system based on the provided technical information.
@@ -94,11 +97,14 @@ async def create_database_table(table: DatabaseTableCreate) -> str:
         try:
     
             response = client.post(url, json=table.model_dump())
-
-            return response.text
     
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def update_database_table(table: DatabaseTableUpdate) -> str:
     """Updates a database table in the SAP ABAP system based on the provided technical information.
@@ -116,10 +122,13 @@ async def update_database_table(table: DatabaseTableUpdate) -> str:
     
             response = client.put(url, json=table.model_dump())
 
-            return response.text
-    
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [

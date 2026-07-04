@@ -27,10 +27,13 @@ async def read_transport_request(transport_request: str) -> str:
     
             response = client.get(url, params={"transport": transport_request, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
         
 async def search_transport_requests(description: str, modifiable: bool = True, released: bool = False, workbench: bool = True, customizing: bool = True, transport_of_copies: bool = True) -> str:
     """Searches for transport requests based on the provided criteria.
@@ -62,11 +65,14 @@ async def search_transport_requests(description: str, modifiable: bool = True, r
                 } 
     
             response = client.get(url + "/search", params=params)
-    
-            return response.text
-    
+        
         except Exception as e:
             return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 
 async def release_transport_request(transport_request: str) -> str:
@@ -85,10 +91,13 @@ async def release_transport_request(transport_request: str) -> str:
     
             response = client.put(url + "/release", params={"transport": transport_request, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"    
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 async def change_transport_request_description(transport_request: str, new_description: str) -> str:
     """Changes the description of a transport request.
@@ -107,10 +116,13 @@ async def change_transport_request_description(transport_request: str, new_descr
     
             response = client.put(url + "/change_description", params={"transport": transport_request, "description": new_description, "r": str(uuid.uuid4())})
 
-            return response.text
-
         except Exception as e:
             return f"Error: {e}"       
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
 
 def get_tools():
     return [
