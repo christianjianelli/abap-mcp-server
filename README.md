@@ -32,13 +32,6 @@ This repository contains a lightweight MCP server written in Python. It exposes 
 - **SQL**
   - Perform SELECT, INSERT, UPDATE and DELETE statements on the SAP system
 
-### Transport Management
-
-- **Transport Requests**
-  - Create workbench and customizing requests
-  - Search and read transport request details
-  - Release transport requests
-
 ### ABAP Coding
 
 - **ABAP Class**
@@ -47,11 +40,29 @@ This repository contains a lightweight MCP server written in Python. It exposes 
 - **ABAP Interface**
   - Read, search, create, update, check, activate ABAP Interfaces
 
+- **ABAP Function Group**
+  - Read, search, create, update, check, activate ABAP function groups
+
 - **ABAP Function Module**
-  - Read ABAP function module source code
+  - Read, search, create, update, check, activate ABAP function modules
 
 - **ABAP Program and Include** 
   - Read, search, create, update, check, activate ABAP programs and includes
+
+### Transport Management
+
+- **Transport Requests**
+  - Create workbench and customizing requests
+  - Search and read transport request details
+  - Release transport requests
+
+### Messages and Message Classes
+
+- **Message Classes**
+  - Read, create, update message classes
+
+- **Messages**
+  - Read, create, update, translate, delete messages
 
 ## Installation
 

@@ -1,12 +1,25 @@
 from mcp.server.fastmcp import FastMCP
-from tools import transport_request, domain, data_element, structure, database_table, table_type, cds, sql, program, function_module, oo_class, oo_interface 
+from tools import (
+    domain,
+    data_element,
+    structure,
+    database_table,
+    table_type,
+    cds,
+    sql,
+    program,
+    program_include,
+    function_module,
+    function_group,
+    oo_class,
+    oo_interface,
+    transport_request,
+    message_class,
+    message,
+)
 
 # Initialize FastMCP server
 mcp = FastMCP("ABAP")
-
-# Register the ABAP transport request tools
-for tool_name, tool_function in transport_request.get_tools():
-    mcp.tool(name=tool_name)(tool_function)
 
 # Register the ABAP DDIC domain tools
 for tool_name, tool_function in domain.get_tools():
@@ -40,8 +53,16 @@ for tool_name, tool_function in sql.get_tools():
 for tool_name, tool_function in program.get_tools():
     mcp.tool(name=tool_name)(tool_function)
 
+# Register the ABAP program include tools
+for tool_name, tool_function in program_include.get_tools():
+    mcp.tool(name=tool_name)(tool_function)
+
 # Register the ABAP function module tools
 for tool_name, tool_function in function_module.get_tools():
+    mcp.tool(name=tool_name)(tool_function)
+
+# Register the ABAP function group tools
+for tool_name, tool_function in function_group.get_tools():
     mcp.tool(name=tool_name)(tool_function)
 
 # Register the ABAP OO class tools
@@ -50,6 +71,18 @@ for tool_name, tool_function in oo_class.get_tools():
 
 # Register the ABAP OO interface tools
 for tool_name, tool_function in oo_interface.get_tools():
+    mcp.tool(name=tool_name)(tool_function)
+
+# Register the ABAP transport request tools
+for tool_name, tool_function in transport_request.get_tools():
+    mcp.tool(name=tool_name)(tool_function)
+
+# Register the ABAP message class tools
+for tool_name, tool_function in message_class.get_tools():
+    mcp.tool(name=tool_name)(tool_function)
+
+# Register the ABAP message tools
+for tool_name, tool_function in message.get_tools():
     mcp.tool(name=tool_name)(tool_function)
 
 def main():

@@ -5,34 +5,33 @@ import uuid
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
-class FunctionModuleCreate(BaseModel):
+class FunctionGroupCreate(BaseModel):
     name: str
     shortDescription: str
-    functionGroup: str
     transportRequest: str
+    package: str
 
-class FunctionModuleUpdate(BaseModel):
+class FunctionGroupUpdate(BaseModel):
     name: str
     shortDescription: str
     transportRequest: str
-    sourceCode: str
 
 load_dotenv()
 
-url = os.getenv("BASE_URL") + "func_module_mcp"
+url = os.getenv("BASE_URL") + "func_group_mcp"
 username = os.getenv("SAP_USERNAME")
 password = os.getenv("SAP_PASSWORD")
 auth = httpx.BasicAuth(username=username, password=password)
 
 
-async def read_function_module(name: str) -> str:
-    """Returns the source code of an ABAP function module.
+async def read_function_group(name: str) -> str:
+    """Returns the description, package and source code of an ABAP function group.
 
     Args:
-        name: The name of the ABAP function module to look up.
+        name: The name of the ABAP function group to look up.
 
     Returns:
-        The source code of the ABAP function module.
+        The description, package and source code of the ABAP function group.
     """
     
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
@@ -48,17 +47,17 @@ async def read_function_module(name: str) -> str:
             return f"Error: {response.status_code} - {response.reason_phrase}"
         
         return response.text
-
-async def search_function_modules(package: str, name: str = "", description: str = "") -> str:
-    """Returns a list of ABAP function modules matching the search criteria.
+    
+async def search_function_groups(package: str, name: str = "", description: str = "") -> str:
+    """Returns a list of ABAP function groups matching the search criteria.
 
     Args:
-        package: The package containing the ABAP function module.
-        name: The name of the ABAP function module to look up.
-        description: A description of the ABAP function module.
+        package: The package containing the ABAP function group.
+        name: The name of the ABAP function group to look up.
+        description: A description of the ABAP function group.
 
     Returns:
-        A list of ABAP function modules matching the search criteria.
+        A list of ABAP function groups matching the search criteria.
     """
     
     with httpx.Client(auth=auth, verify=False, timeout=60) as client:
@@ -74,12 +73,12 @@ async def search_function_modules(package: str, name: str = "", description: str
             return f"Error: {response.status_code} - {response.reason_phrase}"
         
         return response.text
-
-async def create_function_module(functionModuleCreate: FunctionModuleCreate) -> str:
-    """Creates a new ABAP function module.
+    
+async def create_function_group(functionGroupCreate: FunctionGroupCreate) -> str:
+    """Creates a new ABAP function group.
 
     Args:
-        functionModuleCreate: An instance of FunctionModuleCreate containing the function module details.
+        functionGroupCreate: An instance of FunctionGroupCreate containing the function group details.
 
     Returns:
         A message indicating whether the creation was successful or not.
@@ -89,7 +88,7 @@ async def create_function_module(functionModuleCreate: FunctionModuleCreate) -> 
 
         try:
 
-            response = client.post(url, json=functionModuleCreate.model_dump())
+            response = client.post(url, json=functionGroupCreate.model_dump())
 
         
         except Exception as e:
@@ -98,13 +97,13 @@ async def create_function_module(functionModuleCreate: FunctionModuleCreate) -> 
         if response.is_error:
             return f"Error: {response.status_code} - {response.reason_phrase}"
         
-        return response.text
-
-async def update_function_module(functionModuleUpdate: FunctionModuleUpdate) -> str:
-    """Updates an existing ABAP function module.
+        return response.text    
+    
+async def update_function_group(functionGroupUpdate: FunctionGroupUpdate) -> str:
+    """Updates an existing ABAP function group.
 
     Args:
-        functionModuleUpdate: An instance of FunctionModuleUpdate containing the updated function module details.
+        functionGroupUpdate: An instance of FunctionGroupUpdate containing the updated function group details.
 
     Returns:
         A message indicating whether the update was successful or not.
@@ -114,7 +113,7 @@ async def update_function_module(functionModuleUpdate: FunctionModuleUpdate) -> 
 
         try:
 
-            response = client.put(url, json=functionModuleUpdate.model_dump())
+            response = client.put(url, json=functionGroupUpdate.model_dump())
 
         
         except Exception as e:
@@ -123,13 +122,13 @@ async def update_function_module(functionModuleUpdate: FunctionModuleUpdate) -> 
         if response.is_error:
             return f"Error: {response.status_code} - {response.reason_phrase}"
         
-        return response.text
+        return response.text    
     
-async def check_function_module_syntax(name: str) -> str:
-    """Perform a syntax check on the source code of an ABAP function module.
+async def check_function_group_syntax(name: str) -> str:
+    """Perform a syntax check on the source code of an ABAP function group.
 
     Args:
-        name: The name of the ABAP function module to check.
+        name: The name of the ABAP function group to check.
 
     Returns:
         A message indicating whether the source code is syntactically correct or not.
@@ -149,11 +148,11 @@ async def check_function_module_syntax(name: str) -> str:
         
         return response.text    
     
-async def activate_function_module(name: str) -> str:
-    """Activates the source code of an ABAP function module.
+async def activate_function_group(name: str) -> str:
+    """Activates the source code of an ABAP function group.
 
     Args:
-        name: The name of the ABAP function module to look up.
+        name: The name of the ABAP function group to look up.
 
     Returns:
         A message indicating whether the activation was successful or not.
@@ -175,10 +174,10 @@ async def activate_function_module(name: str) -> str:
 
 def get_tools():
     return [
-        ("read_function_module", read_function_module),
-        ("search_function_modules", search_function_modules),
-        ("create_function_module", create_function_module),
-        ("update_function_module", update_function_module),
-        ("check_function_module_syntax", check_function_module_syntax),
-        ("activate_function_module", activate_function_module),
+        ("read_function_group", read_function_group),
+        ("search_function_groups", search_function_groups),
+        ("create_function_group", create_function_group),
+        ("update_function_group", update_function_group),
+        ("check_function_group_syntax", check_function_group_syntax),
+        ("activate_function_group", activate_function_group),
     ]
