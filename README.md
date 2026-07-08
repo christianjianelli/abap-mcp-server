@@ -3,6 +3,31 @@ ABAP AI tools - ABAP MCP Server
 
 This repository contains a lightweight MCP server written in Python. It exposes the ABAP MCP tools from the ABAP AI tools so they can be used through an MCP-compatible client.
 
+## Architecture
+
+```mermaid
+sequenceDiagram
+
+    participant C as MCP Client (Codex, Copilot, ...)
+    participant S as ABAP MCP Server (Python)
+    participant F as MCP Function (Python)
+    participant I as SAP ICF Service
+    participant A as ABAP AI tools MCP
+    participant SAP as SAP System
+
+    C->>S: Tool Request
+    S->>F: Invoke Tool
+    F->>I: HTTP Request
+    I->>A: Route Request
+    A->>SAP: Execute ABAP Logic
+
+    SAP-->>A: Response
+    A-->>I: Response
+    I-->>F: HTTP Response
+    F-->>S: Tool Response
+    S-->>C: MCP Response
+```
+
 ## Available Tools
 
 ### ABAP Dictionary (DDIC) Management
