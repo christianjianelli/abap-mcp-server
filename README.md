@@ -104,8 +104,6 @@ The ABAP system must have the following packages installed:
  - **[ABAP AI tools - Function Calling](https://github.com/christianjianelli/yaai_fc)**
  - **[ABAP AI tools - MCP tools](https://github.com/christianjianelli/yaai_mcp)**
 
-You also need a working Python environment that can install the packages from `requirements.txt`.
-
 ```mermaid
 graph RL
     A[ABAP AI tools - Function Calling] --> B[ABAP AI tools]
@@ -113,6 +111,8 @@ graph RL
     C[ABAP AI tools - MCP tools] --> B[ABAP AI tools]
     D[abap-mcp-server] --> C[ABAP AI tools - MCP tools]
 ```
+
+You also need a working Python environment that can install the packages from `requirements.txt`.
 
 ### Installation Steps
 
