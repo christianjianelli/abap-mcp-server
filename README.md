@@ -72,7 +72,7 @@ sequenceDiagram
   - Read, search, create, update, check, activate ABAP function modules
 
 - **ABAP Program and Include** 
-  - Read, search, create, update, check, activate ABAP programs and includes
+  - Read, search, create, update, check, activate ABAP programs and includes 
 
 ### Transport Management
 
@@ -89,6 +89,11 @@ sequenceDiagram
 - **Messages**
   - Read, create, update, translate, delete messages
 
+### ABAP Mass Activation
+
+- **ABAP Mass Activation**
+  - Mass activation of objects passing a list of objects or a transport request
+
 ## Installation
 
 ### Prerequisites
@@ -100,6 +105,14 @@ The ABAP system must have the following packages installed:
  - **[ABAP AI tools - MCP tools](https://github.com/christianjianelli/yaai_mcp)**
 
 You also need a working Python environment that can install the packages from `requirements.txt`.
+
+```mermaid
+graph RL
+    A[ABAP AI tools - Function Calling] --> B[ABAP AI tools]
+    C[ABAP AI tools - MCP tools] --> A[ABAP AI tools - Function Calling]
+    C[ABAP AI tools - MCP tools] --> B[ABAP AI tools]
+    D[abap-mcp-server] --> C[ABAP AI tools - MCP tools]
+```
 
 ### Installation Steps
 
