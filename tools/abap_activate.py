@@ -35,7 +35,7 @@ async def mass_activate(objects: Objects) -> str:
 
         try:
     
-            response = client.put(url, json=objects.model_dump())
+            response = client.put(url+ "/mass_activation", json=objects.model_dump())
 
         except Exception as e:
             return f"Error: {e}"
@@ -59,7 +59,7 @@ async def mass_activate_for_transport_request(transport_request: str) -> str:
 
         try:
     
-            response = client.put(url, params={"transport_request": transport_request, "r": str(uuid.uuid4())})
+            response = client.put(url+ "/mass_activation_for_transport_request", params={"transport_request": transport_request, "r": str(uuid.uuid4())})
 
         except Exception as e:
             return f"Error: {e}"
