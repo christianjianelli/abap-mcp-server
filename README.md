@@ -159,7 +159,7 @@ SAP_PASSWORD=<your-password>
 
 5. Set up your local MCP server in Github Copilot in Eclipse
 
->>> Note: The server runs over stdio, so it is meant to be launched by the MCP client.
+> Note: The server runs over stdio, so it is meant to be launched by the MCP client.
 
 Click on the Configure Tools button in the Copilot chat window or the click on the Copilot menu -> Edit Preferences -> find the MCP Servers section.
 

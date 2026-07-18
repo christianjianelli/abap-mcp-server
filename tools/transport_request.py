@@ -74,6 +74,31 @@ async def search_transport_requests(description: str, modifiable: bool = True, r
         
         return response.text
 
+async def get_current_transport_request(object_type: str, object_name: str) -> str:
+    """Returns the current transport request (in modifiable state) for a given object.
+
+    Args:
+        object_type: The type of the object (DOMA, DTEL, PROG, TABL, CLAS, INTF, FUGR, etc.).
+        object_name: The name of the object.
+
+    Returns:
+        The transport request number associated with the object, or an error message if not found.
+    """
+    
+    with httpx.Client(auth=auth, verify=False, timeout=60) as client:
+
+        try:
+    
+            response = client.get(url, params={"object_type": object_type, "object_name": object_name, "r": str(uuid.uuid4())})
+
+        except Exception as e:
+            return f"Error: {e}"
+        
+        if response.is_error:
+            return f"Error: {response.status_code} - {response.reason_phrase}"
+        
+        return response.text
+
 
 async def release_transport_request(transport_request: str) -> str:
     """Releases a transport request.
@@ -128,6 +153,7 @@ def get_tools():
     return [
         ("read_transport_request", read_transport_request),
         ("search_transport_requests", search_transport_requests),
+        ("get_current_transport_request", get_current_transport_request),
         ("release_transport_request", release_transport_request),
         ("change_transport_request_description", change_transport_request_description),
     ]

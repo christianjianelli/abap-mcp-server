@@ -8,6 +8,33 @@ Legend
 + : added
 - : removed
 
+2026-07-18
+-------------------
+
+Version 1.0.5
+
++ ABAP mass activation tools
++ Transport request tools - Get current transport request for object
++ Get current user
+
+
+2026-07-08
+-------------------
+
+Version 1.0.4
+
++ Function module and function group tools added
++ Message and Message Class tools added
+
+
+2026-07-04
+-------------------
+
+Version 1.0.3
+
++ New program and include tools added
+* Error handling fixes
+
 
 2026-06-30
 -------------------
